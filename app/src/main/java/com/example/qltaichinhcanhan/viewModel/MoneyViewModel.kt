@@ -12,32 +12,32 @@ import kotlinx.coroutines.launch
 class MoneyViewModel(application: Application) : AndroidViewModel(application) {
 
     private var db = MoneyDatabase.getInstance(application)
-    private var bookDao = db.moneyDao()
+    private var moneyDao = db.moneyDao()
 
-    private val repository: MoneyRepository = MoneyRepository(bookDao)
+    private val repository: MoneyRepository = MoneyRepository(moneyDao)
     val readAllData = repository.readAllData
 
-    fun addBook(money: Money) {
+    fun addMoney(money: Money) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.addBook(money)
+            repository.addMoney(money)
         }
     }
 
     fun updateBook(money: Money) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateBook(money)
+            repository.updateMoney(money)
         }
     }
 
     fun deleteBook(money: Money) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteBook(money)
+            repository.deleteMoney(money)
         }
     }
 
     fun deleteAllUsers() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllBook()
+            repository.deleteAllMoney()
         }
     }
 }

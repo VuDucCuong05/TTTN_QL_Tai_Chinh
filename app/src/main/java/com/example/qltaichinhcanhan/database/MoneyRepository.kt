@@ -6,19 +6,19 @@ import com.example.qltaichinhcanhan.mode.Money
 class MoneyRepository(private val moneyDao: MoneyDao) {
     val readAllData: LiveData<List<Money>> = moneyDao.readAllData()
 
-    fun addBook(money: Money) {
-        return moneyDao.addBook(money)
+    fun addMoney(money: Money) {
+        return moneyDao.addMoney(money)
     }
 
-    fun updateBook(money: Money) {
-        moneyDao.updateBook(money)
+    fun updateMoney(money: Money) {
+        moneyDao.updateMoney(money)
     }
 
-    fun deleteBook(money: Money) {
-        moneyDao.deleteBook(money)
+    fun deleteMoney(money: Money) {
+        moneyDao.deleteMoney(money)
     }
 
-    fun deleteAllBook() {
-        moneyDao.deleteAllBook()
+    fun deleteAllMoney() {
+        moneyDao.deleteAllMoney()
     }
 }

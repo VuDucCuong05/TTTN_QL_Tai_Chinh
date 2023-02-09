@@ -4,11 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RadioButton
-        android:id="@+id/rd_category"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/img_category"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tiền nhà"
+        android:padding="10dp"
+        android:src="@drawable/custom_img_category"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_name_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="tien nha"
+        app:layout_constraintBottom_toBottomOf="@id/img_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/img_category"
+        app:layout_constraintTop_toTopOf="@id/img_category" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

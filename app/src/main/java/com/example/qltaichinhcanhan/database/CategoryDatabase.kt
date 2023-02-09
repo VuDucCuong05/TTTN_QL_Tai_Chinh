@@ -4,20 +4,20 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.qltaichinhcanhan.mode.Money
+import com.example.qltaichinhcanhan.mode.Category
 
-@Database(entities = [Money::class], version = 1)
-abstract class MoneyDatabase : RoomDatabase() {
+@Database(entities = [Category::class], version = 1)
+abstract class CategoryDatabase : RoomDatabase() {
     companion object {
-        private const val DATABASE_NAME = "moneydatabase1.db"
-        private var instance: MoneyDatabase? = null
+        private const val DATABASE_NAME = "categorydatabase2.db"
+        private var instance: CategoryDatabase? = null
 
         @Synchronized
-        fun getInstance(context: Context): MoneyDatabase {
+        fun getInstance(context: Context): CategoryDatabase {
             if (instance == null) {
                 instance = Room.databaseBuilder(
                     context.applicationContext,
-                    MoneyDatabase::class.java,
+                    CategoryDatabase::class.java,
                     DATABASE_NAME
                 )
                     .allowMainThreadQueries()
@@ -27,6 +27,6 @@ abstract class MoneyDatabase : RoomDatabase() {
         }
     }
 
-    abstract fun moneyDao(): MoneyDao
+    abstract fun categoryDao(): CategoryDao
 
 }

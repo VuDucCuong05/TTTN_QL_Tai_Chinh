@@ -10,4 +10,11 @@
     <string name="category">Category</string>
     <string name="category_expense">Category expense</string>
     <string name="category_income">Category income</string>
+    <string name="date">Date</string>
+    <string name="food">Food</string>
+    <string name="money">Money</string>
+    <string name="note">Note</string>
+    <string name="title_time">Time Summary</string>
+    <string name="et_summary_month">Month</string>
+    <string name="et_summary_year">Year</string>
 </resources>

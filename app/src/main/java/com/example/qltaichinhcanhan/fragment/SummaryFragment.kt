@@ -3,6 +3,7 @@ package com.example.qltaichinhcanhan.fragment
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterMoney
 import com.example.qltaichinhcanhan.databinding.FragmentSummaryBinding
+import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
+import com.example.qltaichinhcanhan.viewModel.CategoryViewModel
 import com.example.qltaichinhcanhan.viewModel.MoneyViewModel
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Description
@@ -27,6 +30,7 @@ import java.util.*
 class SummaryFragment : Fragment() {
     private lateinit var binding: FragmentSummaryBinding
     private lateinit var moneyViewModel: MoneyViewModel
+    private lateinit var categoryViewModel: CategoryViewModel
     private lateinit var adapterMoneyE: AdapterMoney
     private lateinit var adapterMoneyI: AdapterMoney
 
@@ -54,6 +58,7 @@ class SummaryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         moneyViewModel = ViewModelProvider(requireActivity())[MoneyViewModel::class.java]
+        categoryViewModel = ViewModelProvider(this)[CategoryViewModel::class.java]
         initView()
     }
 
@@ -64,7 +69,15 @@ class SummaryFragment : Fragment() {
             }
         }
 
-        adapterMoneyE = AdapterMoney(requireContext(), listOf())
+        var arrayCategory = arrayListOf<Category>()
+
+        activity?.let {
+            categoryViewModel.readAllData.observe(it) {
+                arrayCategory = it as ArrayList<Category>
+                Log.e("ccccc","hhhh ${arrayCategory.size}")
+            }
+        }
+        adapterMoneyE = AdapterMoney(requireContext(), listOf(), listOf())
         binding.rcvMoneyE.layoutManager = myLinearLayoutManager
         binding.rcvMoneyE.adapter = adapterMoneyE
 
@@ -74,7 +87,7 @@ class SummaryFragment : Fragment() {
             }
         }
 
-        adapterMoneyI = AdapterMoney(requireContext(), listOf())
+        adapterMoneyI = AdapterMoney(requireContext(), listOf(), listOf())
         binding.rcvMoneyI.layoutManager = myLinearLayoutManager1
         binding.rcvMoneyI.adapter = adapterMoneyI
 
@@ -122,7 +135,7 @@ class SummaryFragment : Fragment() {
                 if (aE.size != 0) {
                     binding.rcvMoneyE.visibility = View.VISIBLE
                     binding.textNullE.visibility = View.INVISIBLE
-                    adapterMoneyE.updateData(aE)
+                    adapterMoneyE.updateData(aE,arrayCategory)
                 } else {
                     binding.rcvMoneyE.visibility = View.INVISIBLE
                     binding.textNullE.visibility = View.VISIBLE
@@ -130,7 +143,7 @@ class SummaryFragment : Fragment() {
                 if (aI.size != 0) {
                     binding.rcvMoneyI.visibility = View.VISIBLE
                     binding.textNullI.visibility = View.INVISIBLE
-                    adapterMoneyI.updateData(aI)
+                    adapterMoneyI.updateData(aI,arrayCategory)
                 } else {
                     binding.rcvMoneyI.visibility = View.INVISIBLE
                     binding.textNullI.visibility = View.VISIBLE

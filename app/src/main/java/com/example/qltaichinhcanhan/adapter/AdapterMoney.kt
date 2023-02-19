@@ -2,6 +2,7 @@ package com.example.qltaichinhcanhan.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import com.example.qltaichinhcanhan.mode.Money
 class AdapterMoney(
     var context: Context,
     var list: List<Money>,
+    var arrayCategory: List<Category>,
 ) : RecyclerView.Adapter<AdapterMoney.ViewHolder>() {
 
     inner class ViewHolder(binding: ItemMoneyExpenseBinding) :
@@ -40,8 +42,20 @@ class AdapterMoney(
 
 //            binding.txtDate.text =
 //                item.day.toString() + "/" + item.month.toString() + "/" + item.year.toString()
-            binding.txtCategory.text = item.category.toString()
-            binding.txtMoney.text = item.amount.toString() + item.currency
+
+            for (i in arrayCategory) {
+                if (item.category == i.id) {
+                    binding.txtCategory.text = i.name
+                }
+                Log.e("ccccc","${item.category}: = ${i.id} : ${i.name}")
+            }
+            var nameCurrency = ""
+            if(item.currency == 1){
+                nameCurrency = "VND"
+            }else if(item.currency == 2){
+                nameCurrency = "USD"
+            }
+            binding.txtMoney.text = item.amount.toString() +" "+ nameCurrency
             binding.txtNote.text = item.note.toString()
 
             binding.root.setOnClickListener {
@@ -56,8 +70,9 @@ class AdapterMoney(
         return list.size
     }
 
-    fun updateData(newList: List<Money>) {
+    fun updateData(newList: List<Money>,newCategory: List<Category>) {
         list = newList
+        arrayCategory = newCategory
         reloadData()
     }
 

@@ -12,40 +12,22 @@
     <color name="blue">#2962FF</color>
 
     <color name="main_color">#007EFF</color>
+    <color name="main_color1">#2196F3</color>
 
-    <color name="bg_bnv_color">#F2F4F7</color>
+    <color name="bg_color">#E8E9EC</color>
 
-    <color name="brColor">#F5F5F5</color>
-    <color name="brButton">#007EFF</color>
-    <color name="brButtonHide">#A4CDF8</color>
-    <color name="brButton50">#79b9fb</color>
-    <color name="brLoading">#C4C4C4</color>
-    <color name="textHide">#A9A9A9</color>
-    <color name="textHideTabLayout">#80FFFFFF</color>
-    <color name="textNameFolder">#3D3D3D</color>
-    <color name="viewfinder_laser">#ffcc0000</color>
-    <color name="viewfinder_mask">#60000000</color>
-    <color name="viewfinder_border">#ffafed44</color>
     <color name="progress_gradient_start">#4da5ff</color>
     <color name="progress_gradient_end">#a9d3ff</color>
-    <color name="brEdt">#DFDFDF</color>
-    <color name="brDialog">#797A7C</color>
-    <color name="shadow_btn_tab_layout">#eef7ff</color>
 
     <array name="progress_gradient">
         <item>@color/progress_gradient_start</item>
         <item>@color/progress_gradient_end</item>
     </array>
     <color name="blue_main">#007EFF</color>
-    <color name="blue_secondary">#A4CDF8</color>
     <color name="white_50">#80FFFFFF</color>
-    <color name="black_50">#80000000</color>
 
-    <color name="black_text">#3D3D3D</color>
     <color name="gray_hint_text">#B4B4B4</color>
     <color name="while_main">#F2F4F7</color>
-    <color name="progressBackgroundColor">#F19191</color>
-    <color name="br_loanding">#F66161</color>
     <color name="orange">#D15E16</color>
 
 </resources>

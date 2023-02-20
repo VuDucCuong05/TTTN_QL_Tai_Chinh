@@ -1,9 +1,7 @@
 package com.example.qltaichinhcanhan.fragment
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,19 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterMoney
-import com.example.qltaichinhcanhan.adapter.AdapterMoney1
 import com.example.qltaichinhcanhan.databinding.FragmentSummaryBinding
 import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
 import com.example.qltaichinhcanhan.viewModel.CategoryViewModel
 import com.example.qltaichinhcanhan.viewModel.MoneyViewModel
-import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.formatter.PercentFormatter
-import com.github.mikephil.charting.utils.MPPointF
 import java.util.*
 
 class SummaryFragment : Fragment() {
@@ -112,6 +106,10 @@ class SummaryFragment : Fragment() {
 
 
         binding.btnSummaryEnter.setOnClickListener {
+            if(binding.etSummaryMonth.text.isEmpty() || binding.etSummaryYear.text.isEmpty()){
+                Toast.makeText(requireContext(),"Bạn chưa nhập thời gian!",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             val txtMonth = binding.etSummaryMonth.text.toString().toInt()
             val txtYear = binding.etSummaryYear.text.toString().toInt()
             var currency = 1

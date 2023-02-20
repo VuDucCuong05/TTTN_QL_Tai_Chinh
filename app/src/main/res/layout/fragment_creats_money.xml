@@ -42,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@color/orange"
+        android:backgroundTint="@color/main_color"
         android:text="Bắt đầu" />
 
 </LinearLayout>

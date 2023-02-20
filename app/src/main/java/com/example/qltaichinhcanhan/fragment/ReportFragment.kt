@@ -1,19 +1,24 @@
 package com.example.qltaichinhcanhan.fragment
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qltaichinhcanhan.MoneyTextWatcher
+import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterMoney
 import com.example.qltaichinhcanhan.databinding.FragmentReportBinding
 import com.example.qltaichinhcanhan.mode.Category
@@ -85,17 +90,16 @@ class ReportFragment : Fragment() {
                 }
 
                 val formatter: NumberFormat = DecimalFormat("#,###")
-                binding.txtMoenyIncome.text = formatter.format(moneyI)
+                binding.txtMoenyIncome.text = formatter.format(moneyI) + " đ"
                 moneyI.toString()
-                binding.txtMoenyExpense.text = formatter.format(moneyE)
+                binding.txtMoenyExpense.text = formatter.format(moneyE) + " đ"
 
 
                 val sharedPreferences: SharedPreferences =
                     requireActivity().getSharedPreferences("money", Context.MODE_PRIVATE)
                 val dataMoney = sharedPreferences.getInt("dataMoney", 0)
 
-                // tiền ban đầu + tiền thu nhập - tiền tiêu
-                binding.currentBalance.text = formatter.format(dataMoney + moneyI - moneyE)
+                binding.currentBalance.text = formatter.format(dataMoney + moneyI - moneyE) + " đ"
             }
         }
 
@@ -148,6 +152,10 @@ class ReportFragment : Fragment() {
                     "Ngày bắt đầu phải trước ngày kết thúc",
                     Toast.LENGTH_SHORT).show()
             }
+        }
+
+        adapterMoney.setClickItemSelect {
+
         }
 
     }
@@ -207,6 +215,57 @@ class ReportFragment : Fragment() {
             return false
         }
     }
+    private fun createDialogUpdateOrDeleteCategory(gravity: Int, category: Category) {
+        val dialog = Dialog(requireActivity())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_update_or_delete_category)
 
+        val window = dialog.window ?: return
+        window.setLayout(
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT
+        )
+        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val wLayoutParams = window.attributes
+        wLayoutParams.gravity = gravity
+        window.attributes = wLayoutParams
 
+        if (Gravity.BOTTOM == gravity) {
+            dialog.setCancelable(false)
+        } else {
+            dialog.setCancelable(false)
+        }
+        dialog.show()
+
+        val edtNameCategory = dialog.findViewById<TextView>(R.id.edt_name_category)
+
+        edtNameCategory.text = category.name
+
+        val btnUpdate = dialog.findViewById<TextView>(R.id.btn_app_category)
+        val imgClose = dialog.findViewById<ImageView>(R.id.img_close)
+        val imgDelete = dialog.findViewById<ImageView>(R.id.img_delete)
+
+        btnUpdate.setOnClickListener {
+            val txtNameCategory = edtNameCategory.text.toString()
+            var newCategory = Category(category.id, txtNameCategory, 1, category.select)
+            categoryViewModel.updateBook(newCategory)
+            dialog.dismiss()
+        }
+
+        imgClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        imgDelete.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setPositiveButton("Yes") { _, _ ->
+                categoryViewModel.deleteBook(category)
+                dialog.dismiss()
+            }
+            builder.setNegativeButton("No") { _, _ -> }
+            builder.setTitle("Delete ${category.name} ?")
+            builder.setMessage("Are you sure to remove ${category.name} ?")
+            builder.create().show()
+        }
+    }
 }

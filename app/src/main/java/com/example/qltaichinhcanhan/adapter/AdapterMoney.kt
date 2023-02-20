@@ -75,13 +75,15 @@ class AdapterMoney(
                     } else if (item.currency == 2) {
                         nameCurrency = "USD"
                     }
+                    binding.txtDate.text = item.day.toString() + "/" + item.month + "/" + item.year
+
                     val formatter: NumberFormat = DecimalFormat("#,###")
                     binding.txtMoney.text = formatter.format(item.amount) + " " + nameCurrency
                     binding.txtNote.text = item.note.toString()
 
                     binding.root.setOnClickListener {
                         clickItemSelect?.let {
-                            it(position)
+                            it(item)
                         }
                     }
 
@@ -113,19 +115,9 @@ class AdapterMoney(
                     binding.txtMoney.text = formatter.format(item.amount) + " " + nameCurrency
                     binding.txtNote.text = item.note.toString()
 
-                    binding.root.setOnClickListener {
-                        clickItemSelect?.let {
-                            it(position)
-                        }
-                    }
                 }
             }
 
-            binding.root.setOnClickListener {
-                clickItemSelect?.let {
-                    it(position)
-                }
-            }
         }
     }
 
@@ -144,8 +136,8 @@ class AdapterMoney(
         notifyDataSetChanged()
     }
 
-    private var clickItemSelect: ((Int) -> Unit)? = null
-    fun setClickItemSelect(listener: (Int) -> Unit) {
+    private var clickItemSelect: ((Money) -> Unit)? = null
+    fun setClickItemSelect(listener: (Money) -> Unit) {
         clickItemSelect = listener
     }
 

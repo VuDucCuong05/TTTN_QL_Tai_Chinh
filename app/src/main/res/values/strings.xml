@@ -10,15 +10,19 @@
     <string name="category">Danh mục</string>
     <string name="category_expense">Danh mục chi phí</string>
     <string name="category_income">Danh mục thu nhập</string>
-    <string name="date">Thời gian</string>
+    <string name="date">Ngày</string>
     <string name="food">Food</string>
     <string name="money">Money</string>
-    <string name="note">Note</string>
+    <string name="note">Ghi chú</string>
     <string name="title_time">Thời gian tìm kiếm</string>
     <string name="et_summary_month">Tháng</string>
     <string name="et_summary_year">Ngày</string>
-    <string name="total_balance">Số tiền bạn có</string>
+    <string name="total_balance">Số tiền trong ví của bạn</string>
     <string name="expense">Chi phí</string>
     <string name="in_come">Thu nhập</string>
     <string name="gioi_thieu">Chào mừng bạn đến với Ứng dụng quản lý tài chính cá nhân. Hãy bắt đầu quản lý tiền của mình bằng cách nhập số tiền bạn có</string>
+    <string name="bieu_do">Biểu đồ tròn chi phí/thu nhập</string>
+    <string name="detail_money">Chi tiết giao dịch</string>
+    <string name="txt_title_amount">Số tiền</string>
+    <string name="delete">Xóa</string>
 </resources>

@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:padding="10dp"
         tools:context=".fragment.SummaryFragment">
 
         <TextView
@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/title_time"
             android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -95,13 +96,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/text_null_e"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Không có dữ liệu"
                 android:textColor="@color/red"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toStartOf="@id/text_null_i"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,13 +117,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:visibility="invisible"
                 android:id="@+id/text_null_i"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Không có dữ liệu"
                 android:textColor="@color/red"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_null_e"
                 app:layout_constraintTop_toTopOf="parent" />

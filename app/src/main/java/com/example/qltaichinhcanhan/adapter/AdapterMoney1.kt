@@ -2,10 +2,12 @@ package com.example.qltaichinhcanhan.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.example.qltaichinhcanhan.databinding.ItemCategoryBinding
 import com.example.qltaichinhcanhan.databinding.ItemMoneyESBinding
 import com.example.qltaichinhcanhan.databinding.ItemMoneyExpenseBinding
 import com.example.qltaichinhcanhan.mode.Category
@@ -13,12 +15,12 @@ import com.example.qltaichinhcanhan.mode.Money
 import java.text.DecimalFormat
 import java.text.NumberFormat
 
-class AdapterMoney(
+class AdapterMoney1(
     var context: Context,
     var list: List<Money>,
     var arrayCategory: List<Category>,
     var layoutType: LayoutType, //Thêm biến kiểu enum
-) : RecyclerView.Adapter<AdapterMoney.ViewHolder>() {
+) : RecyclerView.Adapter<AdapterMoney1.ViewHolder>() {
 
     enum class LayoutType {
         TYPE1,
@@ -64,6 +66,7 @@ class AdapterMoney(
                         itemBinding.root.isActivated = false
                     }
 
+                    // ... các xử lý khác tương ứng với layout TYPE1
                     for (i in arrayCategory) {
                         if (item.category == i.id) {
                             binding.txtCategory.text = i.name
@@ -107,8 +110,6 @@ class AdapterMoney(
                     } else if (item.currency == 2) {
                         nameCurrency = "USD"
                     }
-
-                    binding.txtDate.text = item.day.toString() + "/" + item.month + "/" + item.year
                     val formatter: NumberFormat = DecimalFormat("#,###")
                     binding.txtMoney.text = formatter.format(item.amount) + " " + nameCurrency
                     binding.txtNote.text = item.note.toString()

@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterMoney
+import com.example.qltaichinhcanhan.adapter.AdapterMoney1
 import com.example.qltaichinhcanhan.databinding.FragmentSummaryBinding
 import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
@@ -74,10 +75,9 @@ class SummaryFragment : Fragment() {
         activity?.let {
             categoryViewModel.readAllData.observe(it) {
                 arrayCategory = it as ArrayList<Category>
-                Log.e("ccccc","hhhh ${arrayCategory.size}")
             }
         }
-        adapterMoneyE = AdapterMoney(requireContext(), listOf(), listOf())
+        adapterMoneyE = AdapterMoney(requireContext(), listOf(), listOf(),AdapterMoney.LayoutType.TYPE2)
         binding.rcvMoneyE.layoutManager = myLinearLayoutManager
         binding.rcvMoneyE.adapter = adapterMoneyE
 
@@ -87,7 +87,7 @@ class SummaryFragment : Fragment() {
             }
         }
 
-        adapterMoneyI = AdapterMoney(requireContext(), listOf(), listOf())
+        adapterMoneyI = AdapterMoney(requireContext(), listOf(), listOf(),AdapterMoney.LayoutType.TYPE2)
         binding.rcvMoneyI.layoutManager = myLinearLayoutManager1
         binding.rcvMoneyI.adapter = adapterMoneyI
 

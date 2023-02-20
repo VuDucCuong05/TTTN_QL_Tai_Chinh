@@ -11,9 +11,9 @@ class FragmentAdapter(
     fa: FragmentActivity,
 ) : FragmentStateAdapter(fa) {
     private val listFragment = listOf(
+        ReportFragment().newInstance(),
         InputScreenFragment().newInstance(),
-        SummaryFragment().newInstance(),
-        ReportFragment().newInstance()
+        SummaryFragment().newInstance()
     )
 
     override fun createFragment(position: Int): Fragment {

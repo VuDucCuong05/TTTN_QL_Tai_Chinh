@@ -1,6 +1,7 @@
 package com.example.qltaichinhcanhan.fragment
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -23,6 +25,7 @@ import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
 import com.example.qltaichinhcanhan.viewModel.CategoryViewModel
 import com.example.qltaichinhcanhan.viewModel.MoneyViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -32,6 +35,7 @@ class InComeFragment : Fragment() {
     private lateinit var adapterCategory: AdapterCategory
     private lateinit var moneyViewModel: MoneyViewModel
     private lateinit var categoryViewModel: CategoryViewModel
+    private val calendar: Calendar = Calendar.getInstance()
 
     var category = 0
     lateinit var listCategory: ArrayList<Category>
@@ -75,8 +79,8 @@ class InComeFragment : Fragment() {
         activity?.let {
             categoryViewModel.readAllData.observe(it) {
                 listCategory = arrayListOf()
-                for(i in it){
-                    if(i.type == 2){
+                for (i in it) {
+                    if (i.type == 2) {
                         listCategory.add(i)
                     }
                 }
@@ -101,8 +105,24 @@ class InComeFragment : Fragment() {
         }
 
         binding.edtExpenseAmount.addTextChangedListener(MoneyTextWatcher(binding.edtExpenseAmount))
-
+        binding.edtDate.setOnClickListener {
+            showDatePicker(binding.edtDate)
+        }
         binding.btnAdd.setOnClickListener {
+            if (binding.edtExpenseAmount.text.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Bạn chưa nhập số tiền",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+            if (binding.edtDate.text.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Ngày tháng của khoản chi là rất quan trọng. Hãy nhập!",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             val money = getAllMoney()
             if (money.amount!! <= 0) {
                 Toast.makeText(requireContext(), "Bạn chưa nhập số tiền!", Toast.LENGTH_SHORT)
@@ -145,11 +165,6 @@ class InComeFragment : Fragment() {
     }
 
     private fun getAllMoney(): Money {
-        val d = Calendar.getInstance().time
-        val date: Int = d.date
-        val month: Int = d.month + 1
-        val year: Int = d.year + 1900
-
         var amount = 0
         val value = MoneyTextWatcher.parseCurrencyValue(binding.edtExpenseAmount.text.toString())
         val temp = value.toString()
@@ -174,13 +189,21 @@ class InComeFragment : Fragment() {
                 currency = 2
             }
         }
-        return Money(0, 2, date, month, year, currency, amount, note, category)
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date1 = dateFormat.parse(binding.edtDate.text.toString())
+        val calendar = Calendar.getInstance()
+        calendar.time = date1
+        val day1 = calendar.get(Calendar.DAY_OF_MONTH)
+        val month1 = calendar.get(Calendar.MONTH) + 1 // Tháng được đánh số từ 0 đến 11
+        val year1 = calendar.get(Calendar.YEAR)
+        return Money(0, 2, day1, month1, year1, currency, amount, note, category)
     }
 
     private fun clearText() {
         binding.edtExpenseAmount.setText("")
-        binding.edtExpenseAmount.requestFocus()
+        binding.edtDate.setText("")
         binding.edtNote.setText("")
+        binding.edtExpenseAmount.requestFocus()
     }
 
     private fun clearRadioCategory() {
@@ -293,5 +316,28 @@ class InComeFragment : Fragment() {
             builder.setMessage("Are you sure to remove ${category.name} ?")
             builder.create().show()
         }
+    }
+
+    private fun showDatePicker(editText: EditText) {
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
+            { view, year, month, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+                val dateString: String = dateFormat.format(calendar.time)
+                editText.setText(dateString)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+
+        )
+
+        // Thiết lập ngày tối đa là ngày hiện tại
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
+        datePickerDialog.show()
     }
 }

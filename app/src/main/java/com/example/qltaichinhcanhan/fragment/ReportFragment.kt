@@ -1,29 +1,30 @@
 package com.example.qltaichinhcanhan.fragment
 
 import android.app.DatePickerDialog
-import android.os.Build
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker.OnDateChangedListener
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.qltaichinhcanhan.MoneyTextWatcher
 import com.example.qltaichinhcanhan.adapter.AdapterMoney
 import com.example.qltaichinhcanhan.databinding.FragmentReportBinding
 import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
 import com.example.qltaichinhcanhan.viewModel.CategoryViewModel
 import com.example.qltaichinhcanhan.viewModel.MoneyViewModel
+import java.text.DecimalFormat
+import java.text.NumberFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class ReportFragment : Fragment() {
@@ -61,23 +62,40 @@ class ReportFragment : Fragment() {
     private fun initView() {
 
         var arrayMoney = arrayListOf<Money>()
-        var moneyI = 0
-        var moneyE = 0
+
         activity?.let {
             moneyViewModel.readAllData.observe(it) {
+                var moneyE = 0
+                var moneyI = 0
                 arrayMoney = it as ArrayList<Money>
                 for (i in it) {
                     if (i.type == 1) {
-                        moneyE += i.amount!!
+                        if (i.currency == 1) {
+                            moneyE += i.amount!!
+                        } else if (i.currency == 2) {
+                            moneyE += i.amount!! * 23700
+                        }
                     } else if (i.type == 2) {
-                        moneyI += i.amount!!
+                        if (i.currency == 1) {
+                            moneyI += i.amount!!
+                        } else if (i.currency == 2) {
+                            moneyI += i.amount!! * 23700
+                        }
                     }
                 }
 
-                binding.totalIncome.text = "Số tiền thu nhập: " + moneyI
-                binding.totalSpent.text = "Số tiền đã tiêu: " + moneyE
+                val formatter: NumberFormat = DecimalFormat("#,###")
+                binding.txtMoenyIncome.text = formatter.format(moneyI)
+                moneyI.toString()
+                binding.txtMoenyExpense.text = formatter.format(moneyE)
+
+
+                val sharedPreferences: SharedPreferences =
+                    requireActivity().getSharedPreferences("money", Context.MODE_PRIVATE)
+                val dataMoney = sharedPreferences.getInt("dataMoney", 0)
+
                 // tiền ban đầu + tiền thu nhập - tiền tiêu
-                binding.currentBalance.text = (moneyI - moneyE).toString()
+                binding.currentBalance.text = formatter.format(dataMoney + moneyI - moneyE)
             }
         }
 
@@ -91,7 +109,8 @@ class ReportFragment : Fragment() {
             }
         }
 
-        adapterMoney = AdapterMoney(requireContext(), listOf(), listOf())
+        adapterMoney =
+            AdapterMoney(requireContext(), listOf(), listOf(), AdapterMoney.LayoutType.TYPE1)
         binding.rcvMoney.adapter = adapterMoney
         binding.rcvMoney.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -115,7 +134,15 @@ class ReportFragment : Fragment() {
                 return@setOnClickListener
             }
             if (isStartDateBeforeEndDate(startDate, endDate)) {
-                adapterMoney.updateData(checkMoney(startDate, endDate, arrayMoney), arrayCategory)
+                var list = checkMoney(startDate, endDate, arrayMoney)
+                if (list.size == 0) {
+                    binding.txtNoMoney.visibility = View.VISIBLE
+                    binding.rcvMoney.visibility = View.INVISIBLE
+                } else {
+                    binding.txtNoMoney.visibility = View.GONE
+                    binding.rcvMoney.visibility = View.VISIBLE
+                    adapterMoney.updateData(list, arrayCategory)
+                }
             } else {
                 Toast.makeText(requireContext(),
                     "Ngày bắt đầu phải trước ngày kết thúc",

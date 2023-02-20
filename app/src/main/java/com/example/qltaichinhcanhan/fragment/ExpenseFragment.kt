@@ -1,17 +1,25 @@
 package com.example.qltaichinhcanhan.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,6 +31,7 @@ import com.example.qltaichinhcanhan.databinding.FragmentExpenseBinding
 import com.example.qltaichinhcanhan.mode.Category
 import com.example.qltaichinhcanhan.mode.Money
 import com.example.qltaichinhcanhan.viewModel.CategoryViewModel
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -31,6 +40,7 @@ class ExpenseFragment : Fragment() {
     private lateinit var adapterCategory: AdapterCategory
     private lateinit var moneyViewModel: MoneyViewModel
     private lateinit var categoryViewModel: CategoryViewModel
+    private val calendar: Calendar = Calendar.getInstance()
 
     var category = 0
     lateinit var listCategory: ArrayList<Category>
@@ -74,8 +84,8 @@ class ExpenseFragment : Fragment() {
         activity?.let {
             categoryViewModel.readAllData.observe(it) {
                 listCategory = arrayListOf()
-                for(i in it){
-                    if(i.type == 1){
+                for (i in it) {
+                    if (i.type == 1) {
                         listCategory.add(i)
                     }
                 }
@@ -101,7 +111,24 @@ class ExpenseFragment : Fragment() {
 
         binding.edtExpenseAmount.addTextChangedListener(MoneyTextWatcher(binding.edtExpenseAmount))
 
+        binding.edtDate.setOnClickListener {
+            showDatePicker(binding.edtDate)
+        }
         binding.btnAdd.setOnClickListener {
+            if (binding.edtExpenseAmount.text.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Bạn chưa nhập số tiền",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
+            if (binding.edtDate.text.isEmpty()) {
+                Toast.makeText(requireContext(),
+                    "Ngày tháng của khoản chi là rất quan trọng. Hãy nhập!",
+                    Toast.LENGTH_SHORT)
+                    .show()
+                return@setOnClickListener
+            }
             val money = getAllMoney()
             if (money.amount!! <= 0) {
                 Toast.makeText(requireContext(), "Bạn chưa nhập số tiền!", Toast.LENGTH_SHORT)
@@ -113,18 +140,25 @@ class ExpenseFragment : Fragment() {
                     Toast.LENGTH_SHORT).show()
                 clearText()
                 clearRadioCategory()
+                hideKeyboard(requireActivity())
             }
         }
     }
 
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = activity.currentFocus ?: View(activity)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
     private fun creakArrayListCategory(): ArrayList<Category> {
         var listCategory = arrayListOf<Category>()
-        listCategory.add(Category(0, "Tiền nhà", 1,true))
-        listCategory.add(Category(0, "Giao thông", 1,false))
-        listCategory.add(Category(0, "Du lịch", 1,false))
-        listCategory.add(Category(0, "Mua sắm", 1,false))
-        listCategory.add(Category(0, "Rượu và đồ uống",1, false))
-        listCategory.add(Category(0, "Học tập", 1,false))
+        listCategory.add(Category(0, "Tiền nhà", 1, true))
+        listCategory.add(Category(0, "Giao thông", 1, false))
+        listCategory.add(Category(0, "Du lịch", 1, false))
+        listCategory.add(Category(0, "Mua sắm", 1, false))
+        listCategory.add(Category(0, "Rượu và đồ uống", 1, false))
+        listCategory.add(Category(0, "Học tập", 1, false))
         return listCategory
     }
 
@@ -144,11 +178,6 @@ class ExpenseFragment : Fragment() {
     }
 
     private fun getAllMoney(): Money {
-        val d = Calendar.getInstance().time
-        val date: Int = d.date
-        val month: Int = d.month + 1
-        val year: Int = d.year + 1900
-
         var amount = 0
         val value = MoneyTextWatcher.parseCurrencyValue(binding.edtExpenseAmount.text.toString())
         val temp = value.toString()
@@ -173,13 +202,23 @@ class ExpenseFragment : Fragment() {
                 currency = 2
             }
         }
-        return Money(0, 1, date, month, year, currency, amount, note, category)
+
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val date1 = dateFormat.parse(binding.edtDate.text.toString())
+        val calendar = Calendar.getInstance()
+        calendar.time = date1
+        val day1 = calendar.get(Calendar.DAY_OF_MONTH)
+        val month1 = calendar.get(Calendar.MONTH) + 1 // Tháng được đánh số từ 0 đến 11
+        val year1 = calendar.get(Calendar.YEAR)
+
+        return Money(0, 1, day1, month1, year1, currency, amount, note, category)
     }
 
     private fun clearText() {
         binding.edtExpenseAmount.setText("")
-        binding.edtExpenseAmount.requestFocus()
         binding.edtNote.setText("")
+        binding.edtDate.setText("")
+        binding.edtExpenseAmount.requestFocus()
     }
 
     private fun clearRadioCategory() {
@@ -226,7 +265,7 @@ class ExpenseFragment : Fragment() {
                 }
             }
             if (ckNameCategory) {
-                categoryViewModel.addCategory(Category(0, txtNameCategory, 1,false))
+                categoryViewModel.addCategory(Category(0, txtNameCategory, 1, false))
                 dialog.dismiss()
             } else {
                 Toast.makeText(requireContext(),
@@ -272,7 +311,7 @@ class ExpenseFragment : Fragment() {
 
         btnUpdate.setOnClickListener {
             val txtNameCategory = edtNameCategory.text.toString()
-            var newCategory = Category(category.id, txtNameCategory, 1,category.select)
+            var newCategory = Category(category.id, txtNameCategory, 1, category.select)
             categoryViewModel.updateBook(newCategory)
             dialog.dismiss()
         }
@@ -292,6 +331,29 @@ class ExpenseFragment : Fragment() {
             builder.setMessage("Are you sure to remove ${category.name} ?")
             builder.create().show()
         }
+    }
+
+    private fun showDatePicker(editText: EditText) {
+        val datePickerDialog = DatePickerDialog(
+            requireActivity(),
+            { view, year, month, dayOfMonth ->
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, month)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+                val dateString: String = dateFormat.format(calendar.time)
+                editText.setText(dateString)
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+
+        )
+
+        // Thiết lập ngày tối đa là ngày hiện tại
+        datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
+        datePickerDialog.show()
     }
 
 

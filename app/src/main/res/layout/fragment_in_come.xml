@@ -66,6 +66,25 @@
         app:layout_constraintTop_toBottomOf="@id/edt_expense_amount" />
 
     <TextView
+        android:id="@+id/txt_title_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Thời gian"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/edt_note" />
+
+    <EditText
+        android:id="@+id/edt_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/main_color"
+        android:clickable="true"
+        android:focusable="false"
+        android:inputType="none"
+        app:layout_constraintTop_toBottomOf="@id/txt_title_date" />
+
+    <TextView
         android:id="@+id/tv_expense_in_come"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +94,7 @@
         android:textColor="@color/orange"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/edt_note" />
+        app:layout_constraintTop_toBottomOf="@id/edt_date" />
 
     <ImageView
         android:id="@+id/btn_add_category"

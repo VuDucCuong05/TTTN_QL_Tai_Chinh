@@ -1,60 +1,107 @@
 package com.example.qltaichinhcanhan.fragment
 
+import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.qltaichinhcanhan.R
+import androidx.lifecycle.ViewModelProvider
+import com.example.qltaichinhcanhan.databinding.FragmentDetailMoneyBinding
+import com.example.qltaichinhcanhan.inf.CallBackDetail
+import com.example.qltaichinhcanhan.inf.FragmentADelegate
+import com.example.qltaichinhcanhan.inf.InterDetailToReport
+import com.example.qltaichinhcanhan.mode.Money
+import com.example.qltaichinhcanhan.viewModel.MoneyViewModel
+import java.text.DecimalFormat
+import java.text.NumberFormat
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DetailMoneyFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DetailMoneyFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+    lateinit var binding: FragmentDetailMoneyBinding
+    lateinit var moneyViewModel: MoneyViewModel
+
+    private var delegate: FragmentADelegate? = null
+    private var callback: InterDetailToReport? = null
+
+    private var callBackDetail: CallBackDetail? = null
+
+    // chuyền nhận data từ activit, framgnet
+    fun newInstance(): DetailMoneyFragment {
+        val args = Bundle()
+        val fragment = DetailMoneyFragment()
+        fragment.arguments = args
+        return fragment
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_money, container, false)
+    ): View {
+        binding = FragmentDetailMoneyBinding.inflate(layoutInflater)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DetailMoneyFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DetailMoneyFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        moneyViewModel = ViewModelProvider(requireActivity())[MoneyViewModel::class.java]
+
+        binding.imgClose.setOnClickListener {
+            delegate?.backToFragmentA()
+        }
+
+        val data = arguments?.getSerializable("data") as Money
+        Log.e("ccccc"," - khoi dao data: ${data.note}")
+
+        setDataMoney(data)
+
+        binding.txtDelete.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setPositiveButton("Có") { _, _ ->
+                moneyViewModel.deleteBook(data)
+                callback?.deleteMoneySuccess()
+                delegate?.backToFragmentA()
             }
+            builder.setNegativeButton("Không") { _, _ -> }
+            builder.setTitle("Bạn có chắn chắn muốn xóa giao dịch không?")
+            builder.create().show()
+        }
+
+        binding.imgUpdate.setOnClickListener {
+            delegate?.showFragmentEditMoney(data)
+        }
     }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is FragmentADelegate) {
+            delegate = context
+        }
+        if (context is InterDetailToReport) {
+            callback = context
+        }
+        if (context is CallBackDetail) {
+            callBackDetail = context
+        }
+    }
+
+
+    fun setDataMoney(data: Money) {
+        Log.e("ccccc","${data.note}")
+        var nameCurrency = ""
+        if (data.currency == 1) {
+            nameCurrency = "VND"
+        } else if (data.currency == 2) {
+            nameCurrency = "USD"
+        }
+        val formatter: NumberFormat = DecimalFormat("#,###")
+        binding.txtAmount.text = formatter.format(data.amount) + " " + nameCurrency
+        binding.txtCategory.text = data.category.toString()
+        binding.txtDate.text = data.day.toString() + "/" + data.month + "/" + data.year
+        binding.txtNote.text = data.note.toString()
+    }
+
 }

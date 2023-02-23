@@ -25,4 +25,5 @@
     <string name="detail_money">Chi tiết giao dịch</string>
     <string name="txt_title_amount">Số tiền</string>
     <string name="delete">Xóa</string>
+    <string name="update">Lưu</string>
 </resources>

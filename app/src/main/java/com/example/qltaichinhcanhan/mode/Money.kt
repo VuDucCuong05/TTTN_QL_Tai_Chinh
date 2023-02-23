@@ -5,6 +5,8 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
 @Parcelize
 @Entity(tableName = "Money")
 data class Money(
@@ -18,5 +20,5 @@ data class Money(
     var amount: Int? = null,    // số lượng tiền
     var note: String? = null,
     var category: Int? = null, // loại
-): Parcelable
+): Parcelable, Serializable
 

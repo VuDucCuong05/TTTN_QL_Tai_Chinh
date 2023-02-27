@@ -307,13 +307,13 @@ class InComeFragment : Fragment() {
 
         imgDelete.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
-            builder.setPositiveButton("Yes") { _, _ ->
+            builder.setPositiveButton("Có") { _, _ ->
                 categoryViewModel.deleteBook(category)
                 dialog.dismiss()
             }
-            builder.setNegativeButton("No") { _, _ -> }
-            builder.setTitle("Delete ${category.name} ?")
-            builder.setMessage("Are you sure to remove ${category.name} ?")
+            builder.setNegativeButton("Không") { _, _ -> }
+            builder.setTitle("Xóa ${category.name} ?")
+            builder.setMessage("Xác nhận xóa thư mục: ${category.name} ?")
             builder.create().show()
         }
     }

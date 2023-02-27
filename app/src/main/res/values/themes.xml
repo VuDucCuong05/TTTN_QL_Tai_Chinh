@@ -20,4 +20,13 @@
         <item name="android:colorPrimaryDark">@android:color/transparent</item>
         <item name="android:windowBackground">@drawable/bg_splash</item>
     </style>
+
+    <style name="Theme.QLTaiChinhCaNhan.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.QLTaiChinhCaNhan.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.QLTaiChinhCaNhan.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

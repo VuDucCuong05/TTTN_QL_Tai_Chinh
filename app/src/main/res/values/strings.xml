@@ -26,4 +26,36 @@
     <string name="txt_title_amount">Số tiền</string>
     <string name="delete">Xóa</string>
     <string name="update">Lưu</string>
+    <string name="register_new_account">Đăng ký tài khoản mới</string>
+    <string name="login">Đăng nhập</string>
+    <string name="language">Tiếng Việt</string>
+    <string name="welcome">Chào mừng bạn đến với \n Quản lý tài chính cá nhân \n dễ dàng và tiện lợi quản lý tài chính \n Đăng ký ngay lần đầu tiên để trở thành nhà quản lý tài chính thông minh!</string>
+    <string name="manager">Kiểm soát thu chi, tiết kiệm đơn giản</string>
+    <string name="discover">Khám phá tính năng đa dạng của ứng dụng quản lý tài chính cá nhân để quản lý tài sản, thanh toán hóa đơn, đầu tư và đổi mới cuộc sống tài chính của bạn.</string>
+    <string name="number_phone_email">Số điện thoại hoặc email</string>
+    <string name="pass">Mật khẩu</string>
+    <string name="text_forgot_pass">Quên mật khẩu</string>
+    <string name="text_sign_up">Đăng ký</string>
+    <string name="text_or_login_with">Hoặc đăng nhập bằng</string>
+    <string name="text_last_name">Tên</string>
+    <string name="text_first_name">Họ</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Số điện thoại</string>
+    <string name="securyti">Bạn có đông ý với các điều khoản dịch vụ và chính sách bảo mật</string>
+    <string name="by_clicking">Bạn đã có tài khoản?</string>
+    <string name="sign_in">Đăng nhập ngay bây giờ</string>
+    <string name="title_activity_ndmain">NDMainActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="total">Tổng cộng</string>
+    <string name="acounts">Tài khoản</string>
+
 </resources>

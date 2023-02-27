@@ -29,5 +29,17 @@
     <color name="gray_hint_text">#B4B4B4</color>
     <color name="while_main">#F2F4F7</color>
     <color name="orange">#D15E16</color>
+    <color name="orange_spl">#FFA726</color>
+    <color name="blu_mani">#01B0F1</color>
+
+    // icon
+    <color name="green_1">#9bb58e</color>
+    <color name="blue_1">#70d3ce</color>
+    <color name="pink_1">#f04c73</color>
+    <color name="blue_2">#4ba0f0</color>
+    <color name="Yellow_1">#eecb4b</color>
+    <color name="green_2">#84d35e</color>
+    <color name="red_1">#ff4342</color>
+    <color name="br_icon">#a3b8b1</color>
 
 </resources>

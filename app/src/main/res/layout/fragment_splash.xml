@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Loading"
-            android:textColor="@color/orange"
+            android:textColor="@color/orange_spl"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:indeterminate="true"
             android:indeterminateOnly="true"
-            android:indeterminateTint="@color/orange"
+            android:indeterminateTint="@color/orange_spl"
             android:indeterminateTintMode="src_atop"
             android:scaleY="2.5" />
     </LinearLayout>

@@ -1,25 +1,20 @@
 package com.example.qltaichinhcanhan.main
 
 import android.os.Bundle
-import android.view.Menu
 import android.view.WindowManager
 import android.widget.Toast
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.databinding.ActivityNdmainBinding
-import com.example.qltaichinhcanhan.main.inf.CallBackHome
+import com.example.qltaichinhcanhan.main.inf.MyCallback
 
-class NDMainActivity : AppCompatActivity(), CallBackHome {
+class NDMainActivity : AppCompatActivity(), MyCallback {
 
     private lateinit var binding: ActivityNdmainBinding
 
@@ -50,7 +45,12 @@ class NDMainActivity : AppCompatActivity(), CallBackHome {
         window.navigationBarColor = resources.getColor(R.color.blu_mani)
     }
 
-    override fun callBackHomeToMainMenu() {
+    override fun onCallback() {
         binding.drawerLayout.openDrawer(GravityCompat.START)
+    }
+
+    override fun onCallbackCategoryToEditC() {
+//        val navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_ndmain)
+//        navController.navigate(R.id.action_nav_home_to_editCategoryFragment)
     }
 }

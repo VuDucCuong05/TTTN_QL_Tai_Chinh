@@ -7,7 +7,7 @@
     tools:context=".main.ui.home.HomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_button_top"
+        android:id="@+id/cl_action_bar_top"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/blu_mani"
@@ -57,7 +57,7 @@
         android:orientation="horizontal"
         android:paddingTop="20dp"
         android:paddingBottom="50dp"
-        app:layout_constraintTop_toBottomOf="@id/cl_button_top">
+        app:layout_constraintTop_toBottomOf="@id/cl_action_bar_top">
 
         <TextView
             android:id="@+id/text_expenses"
@@ -92,12 +92,12 @@
         android:layout_gravity="center"
         android:layout_marginTop="-15dp"
         android:text="88888Đ"
-        android:textColor="@color/red_1"
+        android:textColor="@color/color7"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cl_button_top" />
+        app:layout_constraintTop_toBottomOf="@id/cl_action_bar_top" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

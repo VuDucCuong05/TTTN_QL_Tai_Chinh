@@ -9,5 +9,10 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
 
 </resources>

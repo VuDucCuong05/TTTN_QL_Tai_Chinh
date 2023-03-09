@@ -57,5 +57,11 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="total">Tổng cộng</string>
     <string name="acounts">Tài khoản</string>
+    <string name="edit_category">Chỉnh sửa danh mục</string>
+    <string name="type_category">Loại</string>
+    <string name="planned_outlay">Hạn mức/tháng</string>
+    <string name="icon">Hình ảnh</string>
+    <string name="color">Màu sắc</string>
+    <string name="delete_category">Xóa</string>
 
 </resources>

@@ -86,6 +86,7 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
     implementation 'de.hdodenhof:circleimageview:1.2.1'
 
+    implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
 
 
 }

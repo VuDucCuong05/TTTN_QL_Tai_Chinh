@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical"
-    android:padding="18dp">
+    android:padding="18dp"
+    tools:context=".fragment.login.LoginFragment">
 
     <ImageView
         android:id="@+id/image_logo"
@@ -62,7 +64,7 @@
         app:layout_constraintTop_toTopOf="@id/edt_pass" />
 
     <Button
-        android:id="@+id/btn_sign_up"
+        android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
@@ -78,8 +80,8 @@
         android:text="@string/text_forgot_pass"
         android:textColor="@color/blu_mani"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@id/btn_sign_up"
-        app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
+        app:layout_constraintStart_toStartOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <TextView
         android:id="@+id/text_sign_up"
@@ -89,8 +91,8 @@
         android:text="@string/text_sign_up"
         android:textColor="@color/blu_mani"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@id/btn_sign_up"
-        app:layout_constraintTop_toBottomOf="@id/btn_sign_up" />
+        app:layout_constraintEnd_toEndOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
 
     <LinearLayout
         android:id="@+id/ll_or_login"

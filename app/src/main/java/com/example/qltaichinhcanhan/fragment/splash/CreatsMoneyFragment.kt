@@ -21,6 +21,7 @@ import com.example.qltaichinhcanhan.MainActivity
 import com.example.qltaichinhcanhan.MoneyTextWatcher
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.databinding.FragmentCreatsMoneyBinding
+import com.example.qltaichinhcanhan.main.NDMainActivity
 
 
 class CreatsMoneyFragment : Fragment() {
@@ -54,34 +55,40 @@ class CreatsMoneyFragment : Fragment() {
 
         binding.edtInitialBalance.addTextChangedListener(MoneyTextWatcher(binding.edtInitialBalance))
 
-
         binding.startButton.setOnClickListener {
-            val value =
-                MoneyTextWatcher.parseCurrencyValue(binding.edtInitialBalance.text.toString())
-            val temp = value.toString()
-            if (binding.edtInitialBalance.text.isEmpty()) {
-                Toast.makeText(requireContext(),
-                    "Số tiền hiện tại của bạn là bao nhiêu. Vui lòng nhập dữ liệu!",
-                    Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-            try {
-                var money1 = temp.toInt()
-                val sharedPreferences: SharedPreferences =
-                    requireActivity().getSharedPreferences("money", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
-                editor.putInt("dataMoney", money1)
-                editor.commit()
-
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
-            } catch (e: NumberFormatException) {
-                Toast.makeText(context,
-                    "Hãy nhập lại số tiền",
-                    Toast.LENGTH_SHORT).show()
-            }
+            val intent = Intent(requireActivity(), NDMainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
+
+
+//        binding.startButton.setOnClickListener {
+//            val value =
+//                MoneyTextWatcher.parseCurrencyValue(binding.edtInitialBalance.text.toString())
+//            val temp = value.toString()
+//            if (binding.edtInitialBalance.text.isEmpty()) {
+//                Toast.makeText(requireContext(),
+//                    "Số tiền hiện tại của bạn là bao nhiêu. Vui lòng nhập dữ liệu!",
+//                    Toast.LENGTH_SHORT).show()
+//                return@setOnClickListener
+//            }
+//            try {
+//                var money1 = temp.toInt()
+//                val sharedPreferences: SharedPreferences =
+//                    requireActivity().getSharedPreferences("money", Context.MODE_PRIVATE)
+//                val editor = sharedPreferences.edit()
+//                editor.putInt("dataMoney", money1)
+//                editor.commit()
+//
+//                val intent = Intent(requireActivity(), MainActivity::class.java)
+//                startActivity(intent)
+//                requireActivity().finish()
+//            } catch (e: NumberFormatException) {
+//                Toast.makeText(context,
+//                    "Hãy nhập lại số tiền",
+//                    Toast.LENGTH_SHORT).show()
+//            }
+//        }
     }
 
 }

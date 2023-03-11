@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.databinding.FragmentLoginBinding
 
@@ -48,6 +49,15 @@ class LoginFragment : Fragment() {
                 binding.imgEyePass.isActivated = true
             }
         }
+
+        binding.textSignUp.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signUpFragment)
+        }
+
+        binding.btnLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_creatsMoneyFragment)
+        }
+
     }
 
 }

@@ -31,7 +31,8 @@
 
         <activity
             android:name=".fragment.on_boarding.OnBoardingScreenActivity"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashTheme">
 
         </activity>
         <activity

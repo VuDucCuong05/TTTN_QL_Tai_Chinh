@@ -88,5 +88,4 @@ dependencies {
 
     implementation 'com.github.AAChartModel:AAChartCore-Kotlin:-SNAPSHOT'
 
-
 }

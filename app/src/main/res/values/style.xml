@@ -13,6 +13,9 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="MyTabLayoutChart" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+    </style>
 
 
 </resources>

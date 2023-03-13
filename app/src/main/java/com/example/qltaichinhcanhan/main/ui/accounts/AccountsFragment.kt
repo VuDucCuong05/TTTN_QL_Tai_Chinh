@@ -1,42 +1,14 @@
 package com.example.qltaichinhcanhan.main.ui.accounts
 
-import android.graphics.Color
-import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import com.example.qltaichinhcanhan.databinding.FragmentAccountsBinding
-import com.example.qltaichinhcanhan.main.ChartMoney
 import com.example.qltaichinhcanhan.main.base.BaseFragment
 import com.github.aachartmodel.aainfographics.aachartcreator.*
-import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAAxis
-import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAColumnrange
-import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAPlotOptions
-import com.github.aachartmodel.aainfographics.aaoptionsmodel.AAScrollablePlotArea
-import com.github.mikephil.charting.components.Description
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.components.LegendEntry
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
-import com.github.mikephil.charting.formatter.LargeValueFormatter
-import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.google.android.material.tabs.TabLayout
-import java.time.LocalDate
-import java.time.ZoneOffset
-import java.util.*
-import kotlin.math.min
 
 class AccountsFragment : BaseFragment() {
 

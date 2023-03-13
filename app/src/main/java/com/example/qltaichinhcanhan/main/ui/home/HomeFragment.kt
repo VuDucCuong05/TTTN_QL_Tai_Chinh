@@ -1,25 +1,30 @@
 package com.example.qltaichinhcanhan.main.ui.home
 
-import android.content.Context
-import android.content.res.ColorStateList
 import android.graphics.*
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterCategory
 import com.example.qltaichinhcanhan.databinding.FragmentHomeBinding
 import com.example.qltaichinhcanhan.main.DataChart
 import com.example.qltaichinhcanhan.main.ItemColor
 import com.example.qltaichinhcanhan.main.base.BaseFragment
+import com.example.qltaichinhcanhan.main.m.Account
+import com.example.qltaichinhcanhan.main.m.Category1
+import com.example.qltaichinhcanhan.main.m.IconCategoryData
+import com.example.qltaichinhcanhan.main.m.Transaction
+import com.example.qltaichinhcanhan.main.rdb.datab.AppDatabase
+import com.example.qltaichinhcanhan.main.rdb.vm_data.AccountViewMode
+import com.example.qltaichinhcanhan.main.rdb.vm_data.CategoryViewMode
+import com.example.qltaichinhcanhan.main.rdb.vm_data.TransactionViewMode
 import com.example.qltaichinhcanhan.mode.Category
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -30,6 +35,9 @@ class HomeFragment : BaseFragment() {
 
     lateinit var binding: FragmentHomeBinding
     private lateinit var adapterCategory: AdapterCategory
+    lateinit var accountViewMode: AccountViewMode
+    lateinit var categoryViewMode: CategoryViewMode
+    lateinit var transactionViewMode: TransactionViewMode
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,8 +45,11 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?,
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        initView()
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -135,22 +146,26 @@ class HomeFragment : BaseFragment() {
         var listCategory = arrayListOf<Category>()
         listCategory.add(Category(0, "Tiền nhà", 1, true))
         listCategory.add(Category(0, "Giao thông", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Du lịch", 1, false))
-        listCategory.add(Category(0, "Mua sắm", 1, false))
         listCategory.add(Category(0, "Rượu và đồ uống", 1, false))
         listCategory.add(Category(0, "Học tập", 1, false))
+
+        binding.imgAdd1.setOnClickListener {
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            listCategory.add(Category(0, "Du lịch", 1, false))
+            adapterCategory.updateData(listCategory)
+
+        }
+
 
         adapterCategory = AdapterCategory(requireActivity(), listCategory)
         binding.rcvM.adapter = adapterCategory
         binding.rcvM.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
 
         binding.rcvM.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             var dyTotal = 0
@@ -165,27 +180,69 @@ class HomeFragment : BaseFragment() {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     if (dyTotal > 0) {
                         Log.d("RecyclerView", "Đang vuốt lên")
-                        customHorizontalBar.visibility = View.VISIBLE
-                        binding.imgAdd2.visibility = View.VISIBLE
-                        binding.textValueMoney.visibility = View.VISIBLE
-                        binding.imgAdd1.visibility = View.GONE
-                        pieChart.visibility = View.GONE
+                        binding.ctl2.visibility = View.VISIBLE
+                        binding.ctl1.visibility = View.GONE
                     } else if (dyTotal < 0) {
                         Log.d("RecyclerView", "Đang vuốt xuống")
-                        customHorizontalBar.visibility = View.GONE
-                        binding.imgAdd2.visibility = View.GONE
-                        binding.textValueMoney.visibility = View.GONE
-                        binding.imgAdd1.visibility = View.VISIBLE
-                        pieChart.visibility = View.VISIBLE
+                        binding.ctl2.visibility = View.GONE
+                        binding.ctl1.visibility = View.VISIBLE
                     }
                     dyTotal = 0
                 }
             }
         })
 
+        createData()
 
     }
 
+
+    private fun initView() {
+        accountViewMode = ViewModelProvider(requireActivity())[AccountViewMode::class.java]
+        categoryViewMode = ViewModelProvider(requireActivity())[CategoryViewMode::class.java]
+        transactionViewMode = ViewModelProvider(requireActivity())[TransactionViewMode::class.java]
+
+    }
+
+    private fun createData() {
+
+        var listAccount = arrayListOf<Account>(
+            Account(0, "account1", 1, 10000F, R.drawable.ic_add, 1, false),
+            Account(0, "account2", 2, 20000F, R.drawable.ic_ms2, 2, false),
+            Account(0, "account3", 3, 30000F, R.drawable.ic_ms3, 3, false),
+            Account(0, "account4", 1, 40000F, R.drawable.ic_sk, 4, false),
+            Account(0, "account5", 1, 50000F, R.drawable.ic_gt, 5, false),
+        )
+
+        val listIcon = IconCategoryData.iconList
+        var listCa = arrayListOf<Category1>(
+            Category1(0, "Thêm", 1, 1F, listIcon[0].name, 1, false),
+            Category1(0, "category1", 1, 1F, listIcon[1].name, 1, false),
+            Category1(0, "category2", 1, 1F, listIcon[2].name, 2, false),
+            Category1(0, "category3", 1, 1F, listIcon[3].name, 3, false),
+            Category1(0, "category4", 1, 1F, listIcon[4].name, 4, false),
+            Category1(0, "category5", 1, 1F, listIcon[4].name, 5, false),
+        )
+
+        var listTransaction = arrayListOf<Transaction>(
+            Transaction(0, "transaction 1", 11111F, 1, "ffff", 1, 1),
+            Transaction(0, "transaction 2", 11111F, 1, "ffff", 1, 1),
+            Transaction(0, "transaction 3", 11111F, 1, "ffff", 1, 1),
+            Transaction(0, "transaction 4", 11111F, 1, "ffff", 3, 3),
+            Transaction(0, "transaction 5", 11111F, 1, "ffff", 3, 3),
+        )
+
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val isFirstTime = sharedPref.getBoolean("isFirstTime", true)
+        if (isFirstTime) {
+            accountViewMode.addListAccount(listAccount)
+            categoryViewMode.addListCategory(listCa)
+            transactionViewMode.addListTransaction(listTransaction)
+            sharedPref.edit().putBoolean("isFirstTime", false).apply()
+        }
+
+    }
 
     fun pieChart(data: List<DataChart>, pieChart: PieChart, type: String) {
         val entries = ArrayList<PieEntry>()
@@ -225,5 +282,6 @@ class HomeFragment : BaseFragment() {
         }
         pieChart.setCenterTextColor(Color.BLACK)
     }
+
 
 }

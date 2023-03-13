@@ -63,5 +63,6 @@
     <string name="icon">Hình ảnh</string>
     <string name="color">Màu sắc</string>
     <string name="delete_category">Xóa</string>
+    <string name="icon_catalog">Icon Catalog</string>
 
 </resources>

@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.qltaichinhcanhan.database.CategoryDatabase
 import com.example.qltaichinhcanhan.database.CategoryRepository
+import com.example.qltaichinhcanhan.main.m.Category1
 import com.example.qltaichinhcanhan.mode.Category
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +41,8 @@ class CategoryViewModel(application: Application) : AndroidViewModel(application
             repository.deleteAllCategory()
         }
     }
+
+
 }
 
 

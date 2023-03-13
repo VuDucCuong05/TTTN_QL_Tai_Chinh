@@ -5,15 +5,14 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.databinding.ItemColorBinding
-import com.example.qltaichinhcanhan.main.IConColor
+import com.example.qltaichinhcanhan.main.m.ImageCheckCircle
 
 class AdapterIConColor(
     var context: Context,
-    var listIConColor: ArrayList<IConColor>,
+    var listIConColor: ArrayList<ImageCheckCircle>,
 ) : RecyclerView.Adapter<AdapterIConColor.ViewHolder>() {
-    private var selectedItem: IConColor? = null
+    private var selectedItem: ImageCheckCircle? = null
 
     inner class ViewHolder(binding: ItemColorBinding) : RecyclerView.ViewHolder(binding.root) {
         internal val binding: ItemColorBinding
@@ -50,7 +49,7 @@ class AdapterIConColor(
         return listIConColor.size
     }
 
-    fun updateData(newList: ArrayList<IConColor>) {
+    fun updateData(newList: ArrayList<ImageCheckCircle>) {
         this.listIConColor = newList
         reloadData()
     }
@@ -60,9 +59,9 @@ class AdapterIConColor(
         notifyDataSetChanged()
     }
 
-    private var clickItemSelect: ((IConColor) -> Unit)? = null
+    private var clickItemSelect: ((ImageCheckCircle) -> Unit)? = null
 
-    fun setClickItemSelect(listener: (IConColor) -> Unit) {
+    fun setClickItemSelect(listener: (ImageCheckCircle) -> Unit) {
         clickItemSelect = listener
     }
 }

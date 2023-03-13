@@ -9,7 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.databinding.*
-import com.example.qltaichinhcanhan.main.Category1
+import com.example.qltaichinhcanhan.main.m.Category1
+import com.example.qltaichinhcanhan.main.m.IconCategoryData
 
 class AdapterIconCategory(
     var context: Context,
@@ -53,8 +54,12 @@ class AdapterIconCategory(
             when (layoutType) {
                 LayoutType.TYPE1 -> {
                     binding as ItemIconCategoryBinding
-                    binding.imgIcon.setImageResource(item.icon!!)
-                    binding.textNameCategory.setText(item.name)
+                    val resources = context.resources
+                    val imageResourceId =
+                        resources.getIdentifier(item.icon, "drawable", context.packageName)
+                    binding.imgIcon.setImageResource(imageResourceId)
+
+                    binding.textNameCategory.text = item.nameCategory
                     when (item.color) {
                         0 -> {
                             binding.imgIcon.setBackgroundResource(R.drawable.color_icon_br)
@@ -107,12 +112,15 @@ class AdapterIconCategory(
                 }
                 LayoutType.TYPE2 -> {
                     binding as ItemIconAddCategoryBinding
-                    binding.imgIcon.setImageResource(item.icon!!)
+                    val resources = context.resources
+                    val imageResourceId =
+                        resources.getIdentifier(item.icon, "drawable", context.packageName)
+                    binding.imgIcon.setImageResource(imageResourceId)
 
-                    if(item.select == true){
+                    if (item.select == true) {
                         binding.imgIcon.setBackgroundResource(R.drawable.color_icon_7)
                         binding.root.setBackgroundResource(R.drawable.custom_icon_while)
-                    }else{
+                    } else {
                         binding.imgIcon.setBackgroundResource(R.drawable.color_icon_br)
                         binding.root.background = null
                     }
@@ -159,7 +167,17 @@ class AdapterIconCategory(
     }
 
     override fun getItemCount(): Int {
-        return listCategory.size
+        return when (layoutType) {
+            LayoutType.TYPE1 -> {
+                listCategory.size
+            }
+            LayoutType.TYPE2 -> {
+                6
+            }
+            else -> {
+                listCategory.size
+            }
+        }
     }
 
     fun updateData(newList: ArrayList<Category1>) {
@@ -178,4 +196,6 @@ class AdapterIconCategory(
     fun setClickItemSelect(listener: (Category1) -> Unit) {
         clickItemSelect = listener
     }
+
+
 }

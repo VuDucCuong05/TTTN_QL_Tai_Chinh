@@ -15,9 +15,10 @@ import com.example.qltaichinhcanhan.R
 import com.example.qltaichinhcanhan.adapter.AdapterIConColor
 import com.example.qltaichinhcanhan.adapter.AdapterIconCategory
 import com.example.qltaichinhcanhan.databinding.FragmentEditCategoryBinding
-import com.example.qltaichinhcanhan.main.Category1
-import com.example.qltaichinhcanhan.main.CategoryViewModel
-import com.example.qltaichinhcanhan.main.IConColor
+import com.example.qltaichinhcanhan.main.m.Category1
+import com.example.qltaichinhcanhan.main.m.DataColor
+import com.example.qltaichinhcanhan.main.m.IconCategoryData
+import com.example.qltaichinhcanhan.main.rdb.vm_data.CategoryViewMode
 
 
 class EditCategoryFragment : Fragment() {
@@ -25,7 +26,7 @@ class EditCategoryFragment : Fragment() {
     private lateinit var adapterIconCategory: AdapterIconCategory
     private lateinit var adapterIConColor: AdapterIConColor
 
-    private lateinit var categoryViewModel: CategoryViewModel
+    private lateinit var categoryViewModel: CategoryViewMode
 
     private lateinit var listC: ArrayList<Category1>
     override fun onCreateView(
@@ -39,29 +40,26 @@ class EditCategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        categoryViewModel = ViewModelProvider(requireActivity())[CategoryViewModel::class.java]
+        categoryViewModel = ViewModelProvider(requireActivity())[CategoryViewMode::class.java]
 
-        val selectedCategory = categoryViewModel.selectedCategory.value
+        val selectedCategory = categoryViewModel.category
 
-        binding.imgIconCategory.setImageResource(selectedCategory!!.icon!!)
-        binding.textNameCategory.setText(selectedCategory.name)
+        binding.imgIconCategory.setImageResource(IconCategoryData.showICon(requireContext(),
+            selectedCategory.icon!!))
+        binding.textNameCategory.setText(selectedCategory.nameCategory)
         binding.edtPlannedOutlay.setText(selectedCategory.lave.toString())
 
         binding.btnNavigation.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // thêm vào list < hiện thị ngược từ dưới lên
-        listC = arrayListOf<Category1>(
-            Category1(0, "cc", 1, 0F, R.drawable.ic_gt, 0, false),
-            Category1(1, "cc", 1, 0F, R.drawable.ic_ms1, 0, false),
-            Category1(2, "cc", 1, 0F, R.drawable.ic_ms2, 0, false),
-            Category1(3, "cc", 1, 0F, R.drawable.ic_ms3, 0, false),
-            Category1(4, "cc", 1, 0F, R.drawable.ic_ms4, 0, false),
-            Category1(5, "cc", 1, 0F, R.drawable.ic_more_horiz, 2, false),
-        )
+        val list = categoryViewModel.readAllData
 
-        adapterIconCategory = AdapterIconCategory(requireContext(), listC,
+        val listShow = getLastSixElements(list)
+
+
+        adapterIconCategory = AdapterIconCategory(requireContext(),
+            list as ArrayList<Category1> /* = java.util.ArrayList<com.example.qltaichinhcanhan.main.m.Category1> */,
             AdapterIconCategory.LayoutType.TYPE2)
 
         binding.rcvIconCategory.adapter = adapterIconCategory
@@ -76,50 +74,21 @@ class EditCategoryFragment : Fragment() {
 
 
         adapterIconCategory.setClickItemSelect {
-            binding.imgIconCategory.setImageResource(it.icon!!)
+            binding.imgIconCategory.setImageResource(DataColor.showBackgroundColorCircle(requireContext(),it.icon!!))
         }
 
 
-        val listIConColor = arrayListOf<IConColor>(
-            IConColor(0, 1, R.drawable.click_color_1, true),
-            IConColor(1, 2, R.drawable.click_color_2, false),
-            IConColor(2, 3, R.drawable.click_color_3, false),
-            IConColor(3, 4, R.drawable.click_color_4, false),
-            IConColor(4, 5, R.drawable.click_color_5, false),
-            IConColor(5, 6, R.drawable.click_color_6, false),
-            IConColor(6, 7, R.drawable.click_color_7, false)
-        )
-
-        adapterIConColor = AdapterIConColor(requireContext(), listIConColor)
+        adapterIConColor =
+            AdapterIConColor(requireContext(), DataColor.listImageCheckCircle)
         binding.rcvColor.adapter = adapterIConColor
         binding.rcvColor.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
         adapterIConColor.setClickItemSelect {
-            Log.e("ccccc", "${it.id}")
-            when (it.idColor) {
-                1 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_1)
-                }
-                2 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_2)
-                }
-                3 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_3)
-                }
-                4 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_4)
-                }
-                5 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_5)
-                }
-                6 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_6)
-                }
-                7 -> {
-                    binding.imgIconCategory.setBackgroundResource(R.drawable.color_icon_7)
-                }
-            }
+            val id = DataColor.getIdColorById(it.idColor)
+            binding.imgIconCategory.setBackgroundResource(DataColor.showBackgroundColorCircle(
+                requireContext(),
+                id!!))
         }
     }
 
@@ -141,4 +110,14 @@ class EditCategoryFragment : Fragment() {
         }
         return arrayList
     }
+
+
+    fun getLastSixElements(list: List<Category1>): List<Category1> {
+        return if (list.size > 6) {
+            list.subList(list.size - 6, list.size)
+        } else {
+            list
+        }
+    }
+
 }

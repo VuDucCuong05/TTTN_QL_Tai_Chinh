@@ -16,6 +16,7 @@ import com.example.qltaichinhcanhan.adapter.AdapterCategory
 import com.example.qltaichinhcanhan.databinding.FragmentHomeBinding
 import com.example.qltaichinhcanhan.main.DataChart
 import com.example.qltaichinhcanhan.main.ItemColor
+import com.example.qltaichinhcanhan.main.adapter_main.AdapterTransaction
 import com.example.qltaichinhcanhan.main.base.BaseFragment
 import com.example.qltaichinhcanhan.main.m.Account
 import com.example.qltaichinhcanhan.main.m.Category1
@@ -34,7 +35,7 @@ import com.google.android.material.tabs.TabLayout
 class HomeFragment : BaseFragment() {
 
     lateinit var binding: FragmentHomeBinding
-    private lateinit var adapterCategory: AdapterCategory
+    private lateinit var adapterTransaction: AdapterTransaction
     lateinit var accountViewMode: AccountViewMode
     lateinit var categoryViewMode: CategoryViewMode
     lateinit var transactionViewMode: TransactionViewMode
@@ -143,26 +144,9 @@ class HomeFragment : BaseFragment() {
             }
         })
 
-        var listCategory = arrayListOf<Category>()
-        listCategory.add(Category(0, "Tiền nhà", 1, true))
-        listCategory.add(Category(0, "Giao thông", 1, false))
-        listCategory.add(Category(0, "Rượu và đồ uống", 1, false))
-        listCategory.add(Category(0, "Học tập", 1, false))
 
-        binding.imgAdd1.setOnClickListener {
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            listCategory.add(Category(0, "Du lịch", 1, false))
-            adapterCategory.updateData(listCategory)
-
-        }
-
-
-        adapterCategory = AdapterCategory(requireActivity(), listCategory)
-        binding.rcvM.adapter = adapterCategory
+        adapterTransaction = AdapterTransaction(requireActivity(), transactionViewMode.readData1 as ArrayList)
+        binding.rcvM.adapter = adapterTransaction
         binding.rcvM.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 

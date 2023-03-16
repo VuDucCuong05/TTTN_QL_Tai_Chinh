@@ -30,4 +30,33 @@ object IconCategoryData {
         val resources = context.resources
         return resources.getIdentifier(name, "drawable", context.packageName)
     }
+
+    val iconList1 = listOf(
+        Icon(2, "ic_ms1", R.drawable.ic_ms1, 1),
+        Icon(3, "ic_ms2", R.drawable.ic_ms2, 1),
+        Icon(4, "ic_ms3", R.drawable.ic_ms3, 1),
+        Icon(5, "ic_ms4", R.drawable.ic_ms4, 1),
+        Icon(6, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(7, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(8, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(9, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(10, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(11, "ic_ms5", R.drawable.ic_ms5, 1),
+        Icon(12, "ic_sk", R.drawable.ic_sk, 1)
+    )
+
+    private val categoryList1 = listOf(
+        IconCategory(1, "Thể thao", iconList1),
+        IconCategory(2, "Sức khỏe", iconList1),
+        IconCategory(3, "Mua sắm", iconList1),
+        IconCategory(4, "Thể thao", iconList1),
+        IconCategory(5, "Thể thao", iconList1),
+        IconCategory(6, "Thể thao", iconList1),
+        IconCategory(7, "Thể thao", iconList1),
+        IconCategory(8, "Thể thao", iconList1),
+        IconCategory(9, "Thể thao", iconList1),
+        IconCategory(10, "Giải trí", iconList1)
+    )
+
+    fun getIconCategoryList1(): List<IconCategory> = categoryList1
 }

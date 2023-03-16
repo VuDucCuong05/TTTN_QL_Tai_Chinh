@@ -50,7 +50,7 @@ class EditCategoryFragment : Fragment() {
         binding.edtPlannedOutlay.setText(selectedCategory.lave.toString())
 
         binding.btnNavigation.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().popBackStack(R.id.categoryExpenseFragment,false)
         }
 
         val list = categoryViewModel.readAllData
@@ -89,6 +89,7 @@ class EditCategoryFragment : Fragment() {
             binding.imgIconCategory.setBackgroundResource(DataColor.showBackgroundColorCircle(
                 requireContext(),
                 id!!))
+            findNavController().navigate(R.id.action_editCategoryFragment_to_iconCatalogFragment)
         }
     }
 

@@ -45,6 +45,7 @@
     </fragment>
 
     <fragment
+        android:tag="B"
         android:id="@+id/editCategoryFragment"
         android:name="com.example.qltaichinhcanhan.main.ui.category.EditCategoryFragment"
         android:label="fragment_edit_category"
@@ -54,6 +55,7 @@
             app:destination="@id/iconCatalogFragment" />
     </fragment>
     <fragment
+        android:tag="C"
         android:id="@+id/iconCatalogFragment"
         android:name="com.example.qltaichinhcanhan.main.ui.category.IconCatalogFragment"
         android:label="fragment_icon_catalog"

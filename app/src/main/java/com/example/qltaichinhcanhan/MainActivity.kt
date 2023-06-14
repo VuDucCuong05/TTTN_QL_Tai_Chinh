@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity(), FragmentADelegate,CallBackEdtMoney {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
+        // test commit terminal
     }
 
     private fun init() {

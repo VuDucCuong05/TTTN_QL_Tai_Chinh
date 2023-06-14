@@ -27,6 +27,19 @@ class MainActivity : AppCompatActivity(), FragmentADelegate,CallBackEdtMoney {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
+//        Kiểm tra danh sách các nhánh hiện có:
+//
+//        Sử dụng lệnh git branch để hiển thị danh sách các nhánh hiện có trong dự án.
+//        Dấu (*) sẽ chỉ ra nhánh hiện tại đang được sử dụng.
+//        Chuyển sang một nhánh khác:
+//
+//        Sử dụng lệnh git checkout <branch> để chuyển sang nhánh mới. Thay <branch> bằng tên của nhánh mà bạn muốn chuyển sang.
+//        Ví dụ: git checkout feature-branch để chuyển sang nhánh có tên là "feature-branch".
+//        Tạo và chuyển sang một nhánh mới (nếu cần):
+//
+//        Sử dụng lệnh git checkout -b <new-branch> để tạo một nhánh mới và chuyển sang nhánh đó cùng một lúc. Thay <new-branch> bằng tên của nhánh mới bạn muốn tạo.
+//        Ví dụ: git checkout -b new-feature để tạo nhánh mới có tên là "new-feature" và chuyển sang nhánh đó.
     }
 
     private fun init() {

@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity(), FragmentADelegate,CallBackEdtMoney {
         // test commit terminal
 
         // code trên công ty 1
+        // code ở nhà 1
     }
 
     private fun init() {
